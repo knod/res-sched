@@ -26,14 +26,12 @@ var csvSchedToJSON = function ( oldFilePath, newFilePath ) {
         lines.push( row );
     }
 
-	var json = JSON.stringify( lines )
-
     if ( newFilePath ) {
+        var json = JSON.stringify( lines )
     	fs.writeFileSync( newFilePath, json );
     }
 
-    return json;
-    // alert(lines);
+    return lines;
 };
 
 module.exports = csvSchedToJSON;
