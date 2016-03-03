@@ -5,19 +5,99 @@
 	<title>Document</title>
 
 	<!-- <script src="generator.js"></script> -->
+	<link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
 	<form action="">
 		
 		<section>
 			<h1>Residents</h1>
-			<label for="first-name">First Name</label>
-			<input type="text" name='first-name'>
-			<label for="last-name">Last Name</label>
-			<input type="text" name='last-name'>
-			<label for="middle-initial">Middle Initial (if any)</label>
-			<input type="text" name='middle-initial'>
-			<!-- Remember to filter out any non-aphabetic characters -->
+
+			<div class='sub-section resident-names'>
+
+				<span class='container input resident-name'>
+					<div class='column'>
+						<label for="first-name">First Name</label>
+						<!-- <br> -->
+						<input type="text" name='first-name'>
+					</div>
+					<div class='column'>
+						<label for="last-name">Last Name</label>
+						<!-- <br> -->
+						<input type="text" name='last-name'>
+					</div>
+					<div class='column'>
+						<label for="middle-initial">Middle Initial (if any)</label>
+						<!-- <br> -->
+						<input type="text" name='middle-initial'>
+					</div>
+					<!-- Remember to filter out any non-aphabetic characters -->
+				</span>
+				<span class='controls'>
+					<span class='container add add-resident'>+</span>
+					<span class='container delete delete-resident'>-</span>
+				</span>
+
+				<div class='sub-section vacations'>
+					<h2>Vacations</h2>
+					
+					<span class='container input month-name'>
+						<span class='month'>
+							<input type="checkbox" data='Jan'>
+							<label for="vacation-months">January</label>
+						</span>
+						<span class='month'>
+							<input type="checkbox" data='Feb'>
+							<label for="vacation-months">February</label>
+						</span>
+						<span class='month'>
+							<input type="checkbox" data='Mar'>
+							<label for="vacation-months">March</label>
+						</span>
+						<span class='month'>
+							<input type="checkbox" data='Apr'>
+							<label for="vacation-months">April</label>
+						</span>
+						<span class='month'>
+							<input type="checkbox" data='May'>
+							<label for="vacation-months">May</label>
+						</span>
+						<span class='month'>
+							<input type="checkbox" data='Jun'>
+							<label for="vacation-months">June</label>
+						</span>
+						<span class='month'>
+							<input type="checkbox" data='Jul'>
+							<label for="vacation-months">July</label>
+						</span>
+						<span class='month'>
+							<input type="checkbox" data='Aug'>
+							<label for="vacation-months">August</label>
+						</span>
+						<span class='month'>
+							<input type="checkbox" data='Sep'>
+							<label for="vacation-months">September</label>
+						</span>
+						<span class='month'>
+							<input type="checkbox" data='Oct'>
+							<label for="vacation-months">October</label>
+						</span>
+						<span class='month'>
+							<input type="checkbox" data='Nov'>
+							<label for="vacation-months">November</label>
+						</span>
+						<span class='month'>
+							<input type="checkbox" data='Dec'>
+							<label for="vacation-months">December</label>
+						</span>
+
+				</div>
+				<!-- End vacations -->
+
+			</div>
+			<!-- End resident names -->
+
 		</section>
 
 	</form>
