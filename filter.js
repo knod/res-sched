@@ -13,11 +13,14 @@ var constraints = require('./constraints.js');
 
 'use strict';
 
-var combos 		= fs.readFileSync('combos-test.json')
-var combosArr 	= JSON.parse(combos);
+var combosFile 	= fs.readFileSync('combos-test.json')
+var combosArr 	= JSON.parse(combosFile);
+// Path to where combo data by vacation month is kept, in format for fs.readFile()
+var monthsDir 	= '';
 
 var residents 	= constraints.residents,
 	rotations 	= constraints.rotations,
+	vacRot 		= constraints.vacationRotations,
 	tracker 	= constraints.requirementTracker,
 	rotationMap = constraints.rotationMap,
 	monthMap 	= constraints.monthMap;
@@ -157,23 +160,6 @@ var withSeed = function ( residents ) {
 // ============================
 // POSSIBLE SCHEDULES
 // ============================
-var vacationLimitation = function( vacations, index, rotationsObj ) {
-// Recursive, right? Returns the possible schedules available to someone with
-// vacations requested in their vacations array
-
-	var key = vacations[ index ],
-		result = null;
-
-	if ( key !== undefined ) {
-		result = vacationLimitation( vacations, index + 1, rotationsObj[ key ] );
-	} else {
-		result = rotationsObj[ 'All' ];
-	}
-
-	return result
-};  // End vacationLimitation()
-
-
 var mustExterminate = function( sched, unwanted ) {
 /*
 Figures out if this schedule contains stuff the resident
@@ -218,6 +204,86 @@ Makes sure the schedule contains the slots desired
 };  // End upToSnuff()
 
 
+var addVacations = function( resident, possible ) {
+
+	var extras = resident.extraVacationMonths;
+
+	// If there are no more to add, limits with, don't add any more
+	if ( extras.length <= 0 ) { return possible; }
+
+	// Otherwise, get all the months without those vacation months in them
+	var actual = [];
+	for ( var schedi = 0; schedi < possible.length; schedi++ ) {
+	// For each possible schedule
+
+		var sched = possible[ schedi ];
+		// For each desired rotation month
+		for ( var monthi = 0; monthi < extras.length; monthi++ ) {
+
+			var monthNum = monthMap[ extras[ monthi ] ];
+			// Get the rotation number from the current desired month
+			// in the current schedule
+			var rotationNum = sched[ monthNum ];
+
+			// If that number is one of the rotations that allow vacations, add it
+			if ( vacRot.indexOf( rotationNum ) ) {
+				actual.push( sched )
+			}
+
+		}  // end for every desired month
+	}  // end for every possible schedule
+
+	return actual;
+};  // End addVacations()
+
+
+var vacationLimitation = function( vacations, index, rotationsObj ) {
+// Recursive, right? Returns the possible schedules available to someone with
+// vacations requested in their vacations array
+
+	var key = vacations[ index ],
+		result = null;
+
+	if ( key !== undefined ) {
+		result = vacationLimitation( vacations, index + 1, rotationsObj[ key ] );
+	} else {
+		result = rotationsObj[ 'All' ];
+	}
+
+	return result;
+};  // End vacationLimitation()
+
+
+var vacationLimitation = function( vacations ) {
+// Access files instead Returns the possible schedules available to someone with
+// vacations requested in their vacations array
+
+	var filename = '',
+		result = [];
+
+	for ( var vaci = 0; vaci < vacations.length; vaci++ ) {
+
+		// This assumes we get months as a string of Jan, Feb, etc., not ints
+		var month = monthMap[ vacations[ vaci ] ];
+		filename += month;
+		if ( vaci !== vacations.length ) { filename += '_' }
+
+	}
+
+	// Get file with info ordered by vacation months
+	var file 	= fs.readFileSync( monthsDir + filename + '.json' ),
+		indexes = JSON.parse( file );
+
+	// This array just contains the indexes of the actual combos in the main combo array
+	// Get the actual combos
+	for ( var i = 0; i < indexes.length; i++ ) {
+		result.push( combosArr[ indexes[i] ] );
+	}
+
+	return result;
+};  // End vacationLimitation()
+
+
 var customLimiters = function( resident, possible ) {
 /*
 
@@ -243,7 +309,6 @@ specifically not desired
 				actual.push( sched );
 			}
 		}
-
 	}
 
 	return actual;
@@ -255,21 +320,24 @@ for ( var resi = 0; resi < residents.length; resi++ ) {
 	var resident = residents[ resi ];
 
 	// Get their list of possible schedules using their vacation months
-	var possible = vacationLimitation( residents.vacationMonths, 0, {All: [ [1, 2, 3, 4] ] } );  // Actually use dict of months to patterns
+	// var possible = vacationLimitation( residents.vacationMonths, 0, {All: [ [1, 2, 3, 4] ] } );  // Actually use dict of months to patterns
+	var possible 	  = vacationLimitation( resident.vacationMonths );  // Actually use dict of months to patterns
+	possible 		  = addVacations( resident, possible );
 	resident.possible = customLimiters( resident, possible );
 
 	// If this is the case, something has gone wrong earlier on.
 	// Try to figure it out and tell the person running the program
 	// TODO: Better - try to make sure this can't possibly happen by limiting input
 		// No rejections same as desired slots
-		// No vacations more than there are vacation months
+		// No vacations more than there are vacation months (actually, no more than 3 atm)
+		// May want to add way to have additional vacation months
 	if (resident.possible.length <= 0 ) {
 		console.error('Hmm, no schedule for this resident?', resident );
 	}
 }
 
 
-
+console.log( withSeed(residents) );
 
 
 // ======================================
@@ -308,5 +376,5 @@ var rotObj = {
 	}
 };
 
-console.log( vacationLimitation( ['Jan', 'Feb', 'Aug'], 0, rotObj ) );
+// console.log( vacationLimitation( ['Jan', 'Feb', 'Aug'], 0, rotObj ) );
 // Result should be: [[8,7,6,5,4,2,1,3,1,1,3,1], [8,7,6,5,4,2,1,3,1,3,1,1]]

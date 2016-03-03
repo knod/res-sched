@@ -6,52 +6,52 @@
 var residents = [
 	// `rejects` is monts and rotations that the resident definitely doesn't want to do
 	{
-		name: 'A', indx: 0, vacationMonths: [],
+		name: 'A', indx: 0, vacationMonths: [], extraVacationMonths: [],
 		scheduled: [ {month: 'Jul', rotation: 'Elective'} ],
 		rejects: [], possible: [], schedule: []
 	},
 	{
-		name: 'H', indx: 1, vacationMonths: [],
+		name: 'H', indx: 1, vacationMonths: [], extraVacationMonths: [],
 		scheduled: [ {month: 'Jul', rotation: 'Elective'} ],
 		rejects: [], possible: [], schedule: []
 	},
 	{
-		name: 'K', indx: 2, vacationMonths: [],
+		name: 'K', indx: 2, vacationMonths: [], extraVacationMonths: [],
 		scheduled: [ {month: 'Aug', rotation: 'Winter Park'} ],
 		rejects: [], possible: [], schedule: []
 	},
 	{
-		name: 'B', indx: 3, vacationMonths: []
+		name: 'B', indx: 3, vacationMonths: [], extraVacationMonths: [],
 		scheduled: [ {month: 'Aug', rotation: 'Winter Park'} ],
 		rejects: [], possible: [], schedule: []
 	},
 	{
-		name: '5', indx: 4, vacationMonths: []
+		name: '5', indx: 4, vacationMonths: [], extraVacationMonths: [],
 		scheduled: [],
 		rejects: [], possible: [], schedule: []
 	},
 	{
-		name: '6', indx: 5, vacationMonths: []
+		name: '6', indx: 5, vacationMonths: [], extraVacationMonths: [],
 		scheduled: [],
 		rejects: [], possible: [], schedule: []
 	},
 	{
-		name: '7', indx: 6, vacationMonths: []
+		name: '7', indx: 6, vacationMonths: [], extraVacationMonths: [],
 		scheduled: [],
 		rejects: [], possible: [], schedule: []
 	},
 	{
-		name: '8', indx: 7, vacationMonths: []
+		name: '8', indx: 7, vacationMonths: [], extraVacationMonths: [],
 		scheduled: [],
 		rejects: [], possible: [], schedule: []
 	},
 	{
-		name: '9', indx: 8, vacationMonths: []
+		name: '9', indx: 8, vacationMonths: [], extraVacationMonths: [],
 		scheduled: [],
 		rejects: [], possible: [], schedule: []
 	},
 	{
-		name: '10', indx: 9, vacationMonths: []
+		name: '10', indx: 9, vacationMonths: [], extraVacationMonths: [],
 		scheduled: [],
 		rejects: [], possible: [], schedule: []
 	}
@@ -247,6 +247,9 @@ var rotations = [
 ];
 
 
+var vacationRotations = [3, 6, 7, 8];
+
+
 var requirementTracker = [
 	{},  // Rotation numbers start with 1, so 0 is a placeholder
 	{  // 1
@@ -352,5 +355,5 @@ var monthMap = {
 // For node
 module.exports = {
 	residents: residents, rotations: rotations, requirementTracker: requirementTracker,
-	rotationMap: rotationMap, monthMap: monthMap
+	rotationMap: rotationMap, monthMap: monthMap, vacationRotations: vacationRotations
 }
