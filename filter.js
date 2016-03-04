@@ -27,9 +27,9 @@ var combosArr 	= JSON.parse(combosFile);
 // Path to where combo data by vacation month is kept, in format for fs.readFile()
 var monthsDir 	= '../../../Dropbox/ResSchedule';
 
-// var residents 	= [constraints.residents[0], constraints.residents[1]],
-var residents 	= constraints.residents,
-// var residents 	= constraints.residents.splice(-6),
+var residents 	= [constraints.residents[0], constraints.residents[1]],
+// var residents 	= constraints.residents,
+// var residents 	= constraints.residents.splice(-2),
 	rotations 	= constraints.rotations,
 	vacRot 		= constraints.vacationRotations,
 	tracker 	= constraints.requirementTracker,
@@ -37,10 +37,12 @@ var residents 	= constraints.residents,
 	monthMap 	= constraints.monthMap;
 
 
-// This isn't the way to do it. We need to keep track at each point or something, which is 10! I think
-var progress 	= [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-
+// =============================================================
+// |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+// =============================================================
+// ============================
+// GETTING ONE RESULT
+// ============================
 var blankProgress = function( residents ) {
 
 	var progress = [];
@@ -53,52 +55,52 @@ var blankProgress = function( residents ) {
 };  // End blankProgress()
 
 
-var rankProgress = function( progress, ranked ) {
+// var rankProgress = function( progress, ranked ) {
 
-	// var topIndx = 0,
-	// 	topVal 	= progress[ topIndx ];
+// 	// var topIndx = 0,
+// 	// 	topVal 	= progress[ topIndx ];
 
-	// var withRank = []
+// 	// var withRank = []
 
-	// for ( var progi = 0; progi < progress.length; progi++ ) {
+// 	// for ( var progi = 0; progi < progress.length; progi++ ) {
 
-	// 	var val = progress[ progi ];
+// 	// 	var val = progress[ progi ];
 
-	// 	if ( val < topVal ) {
-	// 		topIndx = progi;
-	// 		topVal 	= val;
-	// 	}
-	// }
+// 	// 	if ( val < topVal ) {
+// 	// 		topIndx = progi;
+// 	// 		topVal 	= val;
+// 	// 	}
+// 	// }
 
-	// // var score = progress[ progi ];
-	// // // Want to make sure that none of the values could be bigger than that score. I think.
-	// // score 	 += score + (1000000000 * progi);
+// 	// // var score = progress[ progi ];
+// 	// // // Want to make sure that none of the values could be bigger than that score. I think.
+// 	// // score 	 += score + (1000000000 * progi);
 
-};  // End rankProgress()
+// };  // End rankProgress()
 
 
-var rankProgress = function( progress, ranked ) {
+// var rankProgress = function( progress, ranked ) {
 
-	// var worstIndx = 0,
-	// 	worstVal  = progress[ worstIndx ];
+// 	// var worstIndx = 0,
+// 	// 	worstVal  = progress[ worstIndx ];
 
-	// var indxAndVal = {};
+// 	// var indxAndVal = {};
 
-	// for ( var progi = 0; progi < progress.length; progi++ ) {
-	// 	var val = progress[ progi ];
-	// 	indxAndVal[ progi ] = val;
-	// }
+// 	// for ( var progi = 0; progi < progress.length; progi++ ) {
+// 	// 	var val = progress[ progi ];
+// 	// 	indxAndVal[ progi ] = val;
+// 	// }
 
-	// var sortable = [];
-	// for (var indx in indxAndVal) {
-	// 	sortable.push( [ indx, indxAndVal[ indx ] ] );
-	// }
+// 	// var sortable = [];
+// 	// for (var indx in indxAndVal) {
+// 	// 	sortable.push( [ indx, indxAndVal[ indx ] ] );
+// 	// }
 
-	// sortable.sort( function(a, b) {
-	// 	return a[1] - b[1]
-	// })
+// 	// sortable.sort( function(a, b) {
+// 	// 	return a[1] - b[1]
+// 	// })
 
-};  // End rankProgress()
+// };  // End rankProgress()
 
 
 var rankProgress = function( progress ) {
@@ -126,7 +128,44 @@ var rankProgress = function( progress ) {
 };  // End rankProgress()
 
 
-var onwardHo = function( residents, progress ) {
+// var progressProgress = function( residents, progress ) {
+// // Increment the indexes that will be used to get schdules,
+// // sort of "breadthwise". Don't progress if there aren't schedules
+// // left to progress with.
+
+// 	// var wasIncremented = false;
+
+// 	// // Rank each index of progress according to value and highest index
+// 	// var rankedIndexes = rankProgress( progress );
+
+// 	// for ( var indxi = 0; indxi < rankedIndexes.length; indxi++ ) {
+
+// 	// 	if ( !wasIncremented ) {
+
+// 	// 		var indx 			= rankedIndexes[ indxi ],
+// 	// 			nextSchedIndx 	= progress[ indx ] + 1,
+// 	// 			// Look at the possible schedules of the resident at that progress slot
+// 	// 			possible 		= residents[ indx ].possible;
+
+// 	// 		// If there are more schedules left, progress the resident
+// 	// 		if ( possible[ nextSchedIndx ] !== undefined ) {
+// 	// 			progress[ indx ] = nextSchedIndx;
+// 	// 			wasIncremented 	 = true;
+// 	// 		}
+// 	// 	}  // end if nothing can be incremented yet
+// 	// }  // end for every ranked index
+
+// 	// // If we weren't able to increment anything, this is a dead end
+// 	// if (!wasIncremented) {
+// 	// 	progress = null;
+// 	// }
+
+// 	// return progress;
+// };  // End progressProgress()
+
+
+// New for oneResult()
+var progressProgress = function( residents, progress ) {
 // Increment the indexes that will be used to get schdules,
 // sort of "breadthwise". Don't progress if there aren't schedules
 // left to progress with.
@@ -157,20 +196,20 @@ var onwardHo = function( residents, progress ) {
 	if (!wasIncremented) {
 		progress = null;
 	}
-
+	console.log('progress:', progress);
 	return progress;
-};  // End onwardHo()
+};  // End progressProgress()
 
 
-var rankResult = function( sched ) {
+// var rankResult = function( sched ) {
 
-	// var clone = sched.slice(),
-	// 	rank = clone.reduce(function(a, b) {
-	// 		return a + b;
-	// 	});
+// 	// var clone = sched.slice(),
+// 	// 	rank = clone.reduce(function(a, b) {
+// 	// 		return a + b;
+// 	// 	});
 
-	// return rank;
-};  // End rankResult()
+// 	// return rank;
+// };  // End rankResult()
 
 
 var rankResult = function( resultArray ) {
@@ -188,8 +227,8 @@ var rankResult = function( resultArray ) {
 };  // End rankResult()
 
 
-var didTheBareMinimum = function () {
-// Depends on global var `tracker` and `rotations`
+var bareMinimum = function ( tracker ) {
+// Depends on global var `rotations`
 // rotations = [ {}, {...perMonth: [ {min: #, max: #} * 12 ]} ]
 // tracker = [ [], [# * 12] ]
 // Same indexes for rotations and for tracker
@@ -212,7 +251,7 @@ var didTheBareMinimum = function () {
 	}  // end for every tracker and requirement rotation record
 
 	return meetsMins;
-};  // End didTheBareMinimum()
+};  // End bareMinimum()
 
 
 var tooMany = function ( sched, tracker ) {
@@ -266,90 +305,186 @@ var trackItUp = function ( sched, tracker ) {
 };  // End trackItUp()
 
 
-var itsPossible = function( resident, schedIndex, allBefore ) {
-// Recursive?
-	// s
-};  // End itsPossible()
+// var itsPossible = function( resident, schedIndex, allBefore ) {
+// // Recursive?
+// 	// s
+// };  // End itsPossible()
 
 
-var withSeedOneResult = function( residents, progress ) {
-// Does one cycle with a seed of residents in a random order using
-// progress to try new schedules "breadthwise" until something works
-// Returns
-// { scheds: [ {resident: {}, schedule: [], rank: #} ], rank: # }
+// var withSeedOneResult = function( residents, progress ) {
+// // Does one cycle with a seed of residents in a random order using
+// // progress to try new schedules "breadthwise" until something works
+// // Returns
+// // { scheds: [ {resident: {}, schedule: [#], rank: #} ], rank: # }
 
-	var result = {
-		scheds: [],
-		rank: 0
-	};
+// 	// var result = {
+// 	// 	scheds: [],
+// 	// 	rank: 0
+// 	// };
+
+// 	// var thisTracker = JSON.parse(JSON.stringify( tracker ));  // global object `tracker`
+
+// 	// for ( var resi = 0; resi < residents.length; resi++ ) {
+
+// 	// 	// Get the schedule at the current point of progress
+// 	// 	var schedIndx 	= progress[ resi ],
+// 	// 		resident 	= residents[ resi ],
+// 	// 		sched 		= resident.possible[ schedIndx ];
+
+// 	// 	var meetsReqs 	= !tooMany( sched, thisTracker );
+
+// 	// 	// If there's a non-match
+// 	// 	if ( !meetsReqs ) {
+
+// 	// 		// Progress forward and try again from the start?
+// 	// 		progress = progressProgress( residents, progress );
+// 	// 		// If this arrangment is a dead end, get a new seed
+// 	// 		if (progress === null) { return null; }
+
+// 	// 		result = withSeedOneResult( residents, progress );
+// 	// 		// Get outta here. If we got success, we don't want to keep
+// 	// 		// looping through residents anymore
+// 	// 		break;
+
+// 	// 	// If we found a schedule that works
+// 	// 	} else {
+// 	// 		// Increment the tracker so we can match against the next one
+// 	// 		trackItUp( sched, thisTracker );
+
+// 	// // console.log('--------- progress:', progress );
+// 	// // console.log('```````````` sched:', sched );
+// 	// 		// Rank each result so we can add them at the end?
+// 	// 		result.scheds.push( {
+// 	// 			resident: resident,
+// 	// 			schedule: sched,
+// 	// 			rank: schedIndx
+// 	// 		} )  // add it and go to the next resident
+// 	// 	}
+// 	// }  // end for each resident
+
+// 	// // // Make sure we've covered the minimums
+// 	// var metMins = bareMinimum( thisTracker );
+// 	// // var metMins = true;
+
+// 	// // If so, move on
+// 	// if ( metMins ) {
+// 	// 	// Make sure to rank the result
+// 	// 	result.rank = rankResult( result );  // Can't do this while testing with no metMins
+
+// 	// // If not, progress and try again
+// 	// } else {
+// 	// 	progress = progressProgress( progress );
+// 	// 	// If this arrangment is a dead end, get a new seed
+// 	// 	if (progress === null) { return null; }
+
+// 	// 	result = withSeedOneResult( residents, progress );
+// 	// 	// The thing that will be returned will be ranked already
+// 	// 	// The terrible beauty of recursion
+// 	// }
+
+// 	// // console.log('result.scheds:', result.scheds, result.scheds[0]);
+// 	// // This assumes a result will always be found. What happens
+// 	// // if incrememnting progress doesn't work
+// 	// return result;
+// };  // End withSeedOneResult()
+
+
+// var reachedTheEnd = function( residents, progress ) {
+
+// 	// var stop = true;
+// 	// for ( var resi = 0; resi < residents.length; resi++ ) {
+// 	// 	var numPossible = resi.possible.length - 1,
+// 	// 		resProgress = progress[ resi ];
+// 	// 	// If any resident has slots left to check, don't stop
+// 	// 	if ( !(resProgress >= numPossible) ) { stop = false; }
+// 	// }
+
+// 	// return stop;
+// };  // End reachedTheEnd()
+
+
+var withSeed = function( residents, progress ) {
+// Returns `result`, which will be
+// { scheds: [ {resident: {}, schedule: [#], rank: #} ], rank: # }
+
+	var result 		= {
+			scheds: [],
+			rank: 0
+		},
+		tempResult 	= {
+			scheds: [],
+			rank: 0
+		};
 
 	var thisTracker = JSON.parse(JSON.stringify( tracker ));  // global object `tracker`
 
 	for ( var resi = 0; resi < residents.length; resi++ ) {
 
 		// Get the schedule at the current point of progress
-		var schedIndx 	= progress[ resi ],
+		var schedIndx 	= progress[ resi ],// + (attempts * 2),// * (resi + 1),
 			resident 	= residents[ resi ],
-			sched 		= resident.possible[ schedIndx ];
+			sched 		= resident.possible[ Math.min(schedIndx, (resident.possible.length - 1) ) ];
 
 		var meetsReqs 	= !tooMany( sched, thisTracker );
 
 		// If there's a non-match
-		if ( !meetsReqs ) {
-
-			// Progress forward and try again from the start?
-			progress = onwardHo( residents, progress );
-			// If this arrangment is a dead end, get a new seed
-			if (progress === null) { return null; }
-
-			result = withSeedOneResult( residents, progress );
-			// Get outta here. If we got success, we don't want to keep
-			// looping through residents anymore
-			break;
-
-		// If we found a schedule that works
-		} else {
+		if ( meetsReqs ) {
 			// Increment the tracker so we can match against the next one
 			trackItUp( sched, thisTracker );
 
 	// console.log('--------- progress:', progress );
 	// console.log('```````````` sched:', sched );
 			// Rank each result so we can add them at the end?
-			result.scheds.push( {
+			tempResult.scheds.push( {
 				resident: resident,
 				schedule: sched,
 				rank: schedIndx
 			} )  // add it and go to the next resident
+
+		} else {
+			// Don't keep searching after one resident can't find results
+			break;
 		}
+
+	}  // end for each resident
+
+	// If the final result contains all the residents
+	if ( tempResult.scheds.length === residents.length ) {
+		// // And we've met our minimum requirements
+		// var metMins = bareMinimum( thisTracker );
+		// if ( metMins ) {
+			// Our result won't be an empty object
+			result = tempResult;
+			// and it will be ranked
+		// 	result.rank = rankResult( result );  // Can't do this while testing with no metMins
+		// }
 	}
 
-	// // Make sure we've covered the minimums
-	// var metMins = didTheBareMinimum();
-	var metMins = true;
-
-	// If so, move on
-	if ( metMins ) {
-		// Make sure to rank the result
-		// result.rank = rankResult( result );  // Can't do this while testing with no metMins
-
-	// If not, progress and try again
-	} else {
-		progress = onwardHo( progress );
-		// If this arrangment is a dead end, get a new seed
-		if (progress === null) { return null; }
-
-		result = withSeedOneResult( residents, progress );
-		// The thing that will be returned will be ranked already
-		// The terrible beauty of recursion
-	}
-
-	// console.log('result.scheds:', result.scheds, result.scheds[0]);
-	// This assumes a result will always be found. What happens
-	// if incrememnting progress doesn't work
 	return result;
-};  // End withSeedOneResult()
+};  // End withSeed()
 
 
+var oneResult = function ( residents, progress ) {
+// With seed of residents in a random order using
+// progress to try new schedules "breadthwise" until something works
+
+	var result = {
+		scheds: [],
+		rank: 0
+	};
+
+	while ( progressProgress( residents, progress ) !== null ) {
+		result = withSeed( residents, progress );
+	}
+
+	return result;
+};  // End oneResult()
+
+
+
+// ============================
+// GENERATE ALL RESULTS
+// ============================
 var shuffle = function( array ) {
 // Shuffles an array in place
 // http://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array-in-javascript
@@ -369,6 +504,8 @@ var shuffle = function( array ) {
 };  // End shuffle()
 
 
+// temp
+var attempts = 1;
 // // ??: Should use indexes of residents below so we can keep track
 // // of what's been tried?
 // var resCombosUsed = [];
@@ -376,23 +513,49 @@ var generateYears = function( residents, numWanted ) {
 // Returns
 // [ { scheds: [ {resident: {}, schedule: [], rank: #} ], rank: # } ]
 
-	var results 	= [],
-		// 1/3.6 mill chance of getting the same combo of residents
-		randomized 	= shuffle( residents.slice() ),
-		progress 	= blankProgress( randomized );
+	var results = [];
 
 	// console.log('---- seed:', randomized[0].name );
-	for ( var done = 0; done < numWanted; done++ ) {
-		var result = withSeedOneResult( randomized, progress );
+	// for ( var done = 0; done < numWanted; done++ ) {
+	// 	// var result = withSeedOneResult( randomized, progress );
+	// 	console.log('-------------------Starting oneResult() while loop-------------------')
+	// 	var result = oneResult( randomized, progress );
 
-		if (result !== null) {
+	// 	// if (result !== null) {
+	// 	// for new method with oneResult()
+	// 	if ( result.scheds !== undefined ) {
+	// 		// TODO: Remember successes and never try them again
+	// 		results.push( result );
+	// 	// If we got nothing back, make sure to re-do this round
+	// 	} else {
+	// 		// TODO: Remember dead ends and never try them again
+	// 		done -= 1;
+	// 	}
+
+	// 	console.log('XXXXXXXXXXXXXXXXXX', results.length, 'RESULTS FOUND XXXXXXXXXXXXXXXXXX')
+
+	// }
+
+	var done = 0;
+	while ( done < numWanted ) {
+
+		// 1/3.6 mill chance of getting the same combo of residents
+		var randomized 	= shuffle( residents.slice() ),
+			progress 	= blankProgress( randomized );
+
+		// var result = withSeedOneResult( randomized, progress );
+		console.log('-------------------Starting oneResult() while loop-------------------')
+		var result = oneResult( randomized, progress );
+
+		// if (result !== null) {
+		// for new method with oneResult()
+		if ( result.scheds.length > 0 ) {
 			// TODO: Remember successes and never try them again
 			results.push( result );
-		// If we got nothing back, make sure to re-do this round
-		} else {
-			// TODO: Remember dead ends and never try them again
-			done -= 1;
+			done += 1
 		}
+
+		console.log('XXXXXXXXXXXXXXXXXX', results.length, 'RESULTS FOUND XXXXXXXXXXXXXXXXXX')
 
 	}
 
@@ -402,68 +565,11 @@ var generateYears = function( residents, numWanted ) {
 };  // End generateYears()
 
 
-// var withSeed = function ( residents ) {
-// // Not sure how to keep track of stuff, or how to recurse
-	// var result = [];
-
-	// var randomized 	= shuffle( residents.slice() ),
-	// 	progress 	= blankProgress( randomized );
-
-	// for ( var resi = 0; resi < randomized.length; resi++ ) {
-	// 	// Start with a seed resident
-	// 	var resident = randomized[ resi ];
-
-	// 	// Pick a schedule that works with all the previous schedules
-	// 	var currSched;
-	// 	if ( resi === 0 ) {
-
-	// 		currSched = resident.possible[ progress[ resident.indx ] ];
-	// 		// Store our progress... with this one... How do I store more in future?
-	// 		progress[ resident.indx ] = progress[ resident.indx ] + 1;
-
-	// 	} else {
-	// 		currSched = itsPossible( resident, 0, result );
-	// 	}
-
-	// 	// If we're stuck with no result on an iteration
-	// 	if ( currSched === null ) {
-	// 		// Actually need to try again with a different possibility
-	// 		// for the first resident? Not sure how to do that
-
-	// 		var next = resident.possible[ progress[resident.indx] ];
-	// 		if ( next !== undefined ) {
-	// 			// Do something to try with that schedule
-	// 		} else {
-	// 			// Try again with the list in a different order, different seed
-	// 			var last = randomized.pop();
-	// 			randomized.shift( last );
-	// 			result = withSeed( randomized );
-	// 		}
-
-	// 	// If this worked fine	
-	// 	} else {
-
-	// 		// Save this schedule
-	// 		resident.schedule = currSched;
-	// 		// Update the requirements tracker
-	// 		trackItUp( resident );
-
-	// 		// Add this resident and schedule to the result
-	// 		result.push( { name: resident.name, sched: resident.schedule } );
-	// 	}
-
-	// 	// For last resident, check if there are enough doctors for rotations
-	// 	// that have a min > 0??
-
-	// }
-
-	// if ( result.length >= 10 ) {
-	// 	return result;
-	// } else {
-	// }
-// };  // End withSeed()
 
 
+// =============================================================
+// |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+// =============================================================
 // ============================
 // POSSIBLE SCHEDULES
 // ============================
