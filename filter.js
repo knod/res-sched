@@ -29,7 +29,7 @@ var monthsDir 	= '../../../Dropbox/ResSchedule';
 
 // var residents 	= [constraints.residents[0], constraints.residents[1]],
 // var residents 	= constraints.residents,
-var residents 	= constraints.residents.splice(-6),
+var residents 	= constraints.residents.splice(-5),
 	rotations 	= constraints.rotations,
 	vacRot 		= constraints.vacationRotations,
 	tracker 	= constraints.requirementTracker,
@@ -509,6 +509,17 @@ var shuffle = function( array ) {
 };  // End shuffle()
 
 
+// FOR DEBUGGING
+var elapsed = function( oldTime ) {
+	var ms = Date.now() - oldTime;
+	
+	var secs = ms/1000,
+		min 	= secs/60,  min = Math.floor(min % 60),
+		hours 	= Math.floor(min / 60), secs = secs % 60;
+
+	return hours + ':' + min + ':' + secs;
+};  // End now()
+
 // temp
 var attempts = 1;
 // // ??: Should use indexes of residents below so we can keep track
@@ -517,29 +528,11 @@ var attempts = 1;
 var generateYears = function( residents, numWanted ) {
 // Returns
 // [ { scheds: [ {resident: {}, schedule: [], rank: #} ], rank: # } ]
+	var oldTime = Date.now();
+	console.log('START. Time elapsed:', elapsed( oldTime ));
+	var loopNumber = 1;
 
 	var results = [];
-
-	// console.log('---- seed:', randomized[0].name );
-	// for ( var done = 0; done < numWanted; done++ ) {
-	// 	// var result = withSeedOneResult( randomized, progress );
-	// 	console.log('-------------------Starting oneResult() while loop-------------------')
-	// 	var result = oneResult( randomized, progress );
-
-	// 	// if (result !== null) {
-	// 	// for new method with oneResult()
-	// 	if ( result.scheds !== undefined ) {
-	// 		// TODO: Remember successes and never try them again
-	// 		results.push( result );
-	// 	// If we got nothing back, make sure to re-do this round
-	// 	} else {
-	// 		// TODO: Remember dead ends and never try them again
-	// 		done -= 1;
-	// 	}
-
-	// 	console.log('XXXXXXXXXXXXXXXXXX', results.length, 'RESULTS FOUND XXXXXXXXXXXXXXXXXX')
-
-	// }
 
 	var done = 0;
 	while ( done < numWanted ) {
@@ -548,8 +541,18 @@ var generateYears = function( residents, numWanted ) {
 		var randomized 	= shuffle( residents.slice() ),
 			progress 	= blankProgress( randomized );
 
-		// var result = withSeedOneResult( randomized, progress );
+		// DEBUGGING
 		console.log('-------------------Starting oneResult() while loop-------------------')
+		console.log('Time elapsed:', elapsed( oldTime ), ', loop number:', loopNumber);
+		// May be good for making sure we don't repeat ourselves too
+		var names = [];
+		for ( var resi = 0; resi < randomized.length; resi++ ) {
+			names.push( randomized[resi].name );
+		}
+		console.log( 'resident order:', names )
+		// END DEBUGGING
+		
+
 		var result = oneResult( randomized, progress );
 
 		// if (result !== null) {
@@ -560,11 +563,17 @@ var generateYears = function( residents, numWanted ) {
 			done += 1
 		}
 
+		// DEBUGGING
+		loopNumber += 1;
 		console.log('XXXXXXXXXXXXXXXXXX', results.length, 'RESULTS FOUND XXXXXXXXXXXXXXXXXX')
+		// END DEBUGGING
 
 	}
 
 	// Store results somewhere (id by what info was provided?)
+
+	// DEBUGGING
+	console.log('END. Time elapsed:', elapsed( oldTime ));
 
 	return results;
 };  // End generateYears()
@@ -575,9 +584,9 @@ var generateYears = function( residents, numWanted ) {
 // =============================================================
 // |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
 // =============================================================
-// ============================
-// POSSIBLE SCHEDULES
-// ============================
+// ===============================
+// POSSIBLE INDIVIDUAL SCHEDULES
+// ===============================
 var mustExterminate = function( sched, unwanted ) {
 /*
 Figures out if this schedule contains stuff the resident
@@ -772,6 +781,10 @@ var simplify = function( optionsArray ) {
 
 
 
+
+// =============================================================
+// |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+// =============================================================
 // =============================
 // DO IT!
 // =============================
@@ -878,19 +891,5 @@ var rotObj = {
 // // Passed 03/02/16 10:06 AM
 
 // Whole thing
-var result = getOptions(residents, 1)
-console.log( JSON.stringify(result) );//.length, getOptions(residents, 2)[0].scheds );  // Just one
-// [
-// 	[
-// 	{"name":"H","schedule":[1,1,3,1,2,7,3,1,4,5,6,8]},
-// 	{"name":"A","schedule":[1,6,3,8,4,1,3,1,2,5,7,1]}
-// 	],
-// 	[
-// 	{"name":"H","schedule":[1,1,3,1,2,7,3,1,4,5,6,8]},
-// 	{"name":"A","schedule":[1,6,3,8,4,1,3,1,2,5,7,1]}
-// 	],
-// 	[
-// 	{"name":"H","schedule":[1,1,3,1,2,7,3,1,4,5,6,8]},
-// 	{"name":"A","schedule":[1,6,3,8,4,1,3,1,2,5,7,1]}
-// 	]
-// ]
+var result = getOptions(residents, 12)
+console.log( JSON.stringify(result) );
