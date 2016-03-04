@@ -27,9 +27,9 @@ var combosArr 	= JSON.parse(combosFile);
 // Path to where combo data by vacation month is kept, in format for fs.readFile()
 var monthsDir 	= '../../../Dropbox/ResSchedule';
 
-var residents 	= [constraints.residents[0], constraints.residents[1]],
+// var residents 	= [constraints.residents[0], constraints.residents[1]],
 // var residents 	= constraints.residents,
-// var residents 	= constraints.residents.splice(-2),
+var residents 	= constraints.residents.splice(-6),
 	rotations 	= constraints.rotations,
 	vacRot 		= constraints.vacationRotations,
 	tracker 	= constraints.requirementTracker,
@@ -196,7 +196,7 @@ var progressProgress = function( residents, progress ) {
 	if (!wasIncremented) {
 		progress = null;
 	}
-	console.log('progress:', progress);
+	// console.log('progress:', progress);
 	return progress;
 };  // End progressProgress()
 
@@ -440,6 +440,7 @@ var withSeed = function( residents, progress ) {
 				schedule: sched,
 				rank: schedIndx
 			} )  // add it and go to the next resident
+			// console.log('meets reqs:', resi, tempResult.scheds.length)
 
 		} else {
 			// Don't keep searching after one resident can't find results
@@ -473,9 +474,13 @@ var oneResult = function ( residents, progress ) {
 		rank: 0
 	};
 
-	while ( progressProgress( residents, progress ) !== null ) {
+	while (
+		progressProgress( residents, progress ) !== null 
+		&& result.scheds.length <= 0) {
+
 		result = withSeed( residents, progress );
 	}
+	// console.log('result lengths:', result.scheds.length)
 
 	return result;
 };  // End oneResult()
