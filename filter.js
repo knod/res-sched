@@ -4,7 +4,7 @@
 * - ??: Somehow keep track of which resident's schedule is
 * 	being most difficult?
 * - ??: Somehow make sure residents can't reject slots that
-* 	they've already scheduled/say they want
+* 	they've already requested/say they want
 * 
 */
 
@@ -27,7 +27,9 @@ var combosArr 	= JSON.parse(combosFile);
 // Path to where combo data by vacation month is kept, in format for fs.readFile()
 var monthsDir 	= '../../../Dropbox/ResSchedule';
 
-var residents 	= [constraints.residents[0], constraints.residents[1]],
+// var residents 	= [constraints.residents[0], constraints.residents[1]],
+var residents 	= constraints.residents,
+// var residents 	= constraints.residents.splice(-6),
 	rotations 	= constraints.rotations,
 	vacRot 		= constraints.vacationRotations,
 	tracker 	= constraints.requirementTracker,
@@ -213,8 +215,7 @@ var didTheBareMinimum = function () {
 };  // End didTheBareMinimum()
 
 
-var tooMany = function ( sched ) {
-// Depends on global var `tracker`
+var tooMany = function ( sched, tracker ) {
 
 	var exceedsLimit = false;
 
@@ -252,8 +253,7 @@ var trackItUp = function ( resident ) {
 };  // End trackItUp()
 
 
-var trackItUp = function ( sched ) {
-// Depends on global var `tracker`
+var trackItUp = function ( sched, tracker ) {
 // Updates the program requirements tracker with +1 to the rotation
 // in each month of the schedule
 
@@ -283,6 +283,8 @@ var withSeedOneResult = function( residents, progress ) {
 		rank: 0
 	};
 
+	var thisTracker = JSON.parse(JSON.stringify( tracker ));  // global object `tracker`
+
 	for ( var resi = 0; resi < residents.length; resi++ ) {
 
 		// Get the schedule at the current point of progress
@@ -290,7 +292,7 @@ var withSeedOneResult = function( residents, progress ) {
 			resident 	= residents[ resi ],
 			sched 		= resident.possible[ schedIndx ];
 
-		var meetsReqs 	= !tooMany( sched );
+		var meetsReqs 	= !tooMany( sched, thisTracker );
 
 		// If there's a non-match
 		if ( !meetsReqs ) {
@@ -308,10 +310,10 @@ var withSeedOneResult = function( residents, progress ) {
 		// If we found a schedule that works
 		} else {
 			// Increment the tracker so we can match against the next one
-			trackItUp( sched );
+			trackItUp( sched, thisTracker );
 
-	console.log('--------- progress:', progress );
-	console.log('```````````` sched:', sched );
+	// console.log('--------- progress:', progress );
+	// console.log('```````````` sched:', sched );
 			// Rank each result so we can add them at the end?
 			result.scheds.push( {
 				resident: resident,
@@ -378,7 +380,8 @@ var generateYears = function( residents, numWanted ) {
 		// 1/3.6 mill chance of getting the same combo of residents
 		randomized 	= shuffle( residents.slice() ),
 		progress 	= blankProgress( randomized );
-console.log('---- seed:', randomized[0].name );
+
+	// console.log('---- seed:', randomized[0].name );
 	for ( var done = 0; done < numWanted; done++ ) {
 		var result = withSeedOneResult( randomized, progress );
 
@@ -491,6 +494,10 @@ var upToSnuff = function( sched, wanted ) {
 /*
 Makes sure the schedule contains the slots desired
 */
+
+	// If there aren't any specified, every schedule is fine
+	if ( !(wanted.length > 0) ) { return true; }
+
 	var accept = false;
 
 	for ( var wantedi = 0; wantedi < wanted.length; wantedi++ ) {
@@ -512,21 +519,21 @@ var customLimiters = function( resident, possible ) {
 /*
 
 Takes out schedules that don't mesh with either already
-scheduled months/rotations or months/rotations that are
+requested months/rotations or months/rotations that are
 specifically not desired
 */
-	var unwanted = resident.rejects,
-		booked 	 = resident.scheduled,
+	var unwanted = resident.rejected,
+		booked 	 = resident.requested,
 		actual 	 = [];
 
 	for ( var schedi = 0; schedi < possible.length; schedi++ ) {
 
 		var sched = possible[ schedi ];
-		// If it contains the slots the resident say they want
-		var hasDesired = upToSnuff( sched, resident.scheduled );
+
+		var hasDesired = upToSnuff( sched, resident.requested );
 		if ( hasDesired ) {
 			// and doesn't contain slots the resident has rejected
-			var reject = mustExterminate( sched, resident.rejects );
+			var reject = mustExterminate( sched, resident.rejected );
 			if ( !reject ) {
 				// add it to the list of their possible schedules
 				actual.push( sched );
@@ -621,10 +628,36 @@ var vacationLimitation = function( vacations ) {
 		// brobot started schedule combo indexes at 1
 		result.push( combosArr[ indexes[i] - 1 ] );
 	}
-// console.log( '---------------------result in vacations:', result);
+
 	return result;
 };  // End vacationLimitation()
 
+
+
+var simplify = function( optionsArray ) {
+
+	var simplified = [];
+
+	for ( var opi = 0; opi < optionsArray.length; opi++ ) {
+		var option = optionsArray[ opi ].scheds;
+
+		var simpleOption = [];
+
+		for ( var resi = 0; resi < option.length; resi++ ) {
+			var res = option[ resi ];
+			var simpleRes = {
+				name: res.resident.name,
+				schedule: res.schedule
+			}
+
+			simpleOption.push( simpleRes );
+		}
+
+		simplified.push( simpleOption );
+	}  // End for each option
+
+	return simplified;
+};  // End simplify()
 
 
 
@@ -666,7 +699,7 @@ var getOptions = function( residents, numWanted ) {
 			// No vacations more than there are vacation months (actually, no more than 3 atm)
 			// May want to add way to have additional vacation months
 		if (resident.possible.length <= 0 ) {
-			console.error('Hmm, no schedule for this resident?', resident );
+			console.error('Hmm, no schedule for this resident?', resident.possible );
 		}
 
 		console.log( '----------length:', resident.possible.length, ', first:', resident.possible[1] );
@@ -677,8 +710,11 @@ var getOptions = function( residents, numWanted ) {
 
 	var options = generateYears( residents, numWanted );
 	// var sorted 	= sortOptions( options );  // Can't do this while testing with no metMins
+	var simplified = simplify( options );
 
-	return sorted;
+	// return sorted;
+	// return options;
+	return simplified;
 };  // End getOptions()
 
 
@@ -731,4 +767,19 @@ var rotObj = {
 // // Passed 03/02/16 10:06 AM
 
 // Whole thing
-console.log( getOptions(residents, 2)[0].scheds );  // Just one
+var result = getOptions(residents, 1)
+console.log( JSON.stringify(result) );//.length, getOptions(residents, 2)[0].scheds );  // Just one
+// [
+// 	[
+// 	{"name":"H","schedule":[1,1,3,1,2,7,3,1,4,5,6,8]},
+// 	{"name":"A","schedule":[1,6,3,8,4,1,3,1,2,5,7,1]}
+// 	],
+// 	[
+// 	{"name":"H","schedule":[1,1,3,1,2,7,3,1,4,5,6,8]},
+// 	{"name":"A","schedule":[1,6,3,8,4,1,3,1,2,5,7,1]}
+// 	],
+// 	[
+// 	{"name":"H","schedule":[1,1,3,1,2,7,3,1,4,5,6,8]},
+// 	{"name":"A","schedule":[1,6,3,8,4,1,3,1,2,5,7,1]}
+// 	]
+// ]

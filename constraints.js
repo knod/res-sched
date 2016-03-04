@@ -8,54 +8,54 @@ var residents = [
 	// `rejects` is monts and rotations that the resident definitely doesn't want to do
 	// schedule should be kept with final results
 	{
-		name: 'A', indx: 0, vacationMonths: [ "Jan", "Feb" ], extraVacationMonths: [],
-		scheduled: [ {month: 'Jul', rotation: 'Elective'} ],
-		rejects: [], possible: []//, schedule: []
+		name: 'A', indx: 0, vacationMonths: [ "Jan", "Mar" ], extraVacationMonths: [],
+		requested: [ {month: 'Jul', rotation: 'Elective'} ],
+		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: 'H', indx: 1, vacationMonths: ["May","Jun","Jul"], extraVacationMonths: [],
-		scheduled: [ {month: 'Jul', rotation: 'Elective'} ],
-		rejects: [], possible: []//, schedule: []
+		name: 'H', indx: 1, vacationMonths: ["May","Jun","Sep"], extraVacationMonths: [],
+		requested: [ {month: 'Jul', rotation: 'Elective'} ],
+		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: 'K', indx: 2, vacationMonths: [], extraVacationMonths: [],
-		scheduled: [ {month: 'Aug', rotation: 'Winter Park'} ],
-		rejects: [], possible: []//, schedule: []
+		name: 'K', indx: 2, vacationMonths: ["Jul", "Dec"], extraVacationMonths: [],
+		requested: [ {month: 'Aug', rotation: 'Winter Park'} ],
+		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: 'B', indx: 3, vacationMonths: [], extraVacationMonths: [],
-		scheduled: [ {month: 'Aug', rotation: 'Winter Park'} ],
-		rejects: [], possible: []//, schedule: []
+		name: 'B', indx: 3, vacationMonths: ["Feb", "Dec"], extraVacationMonths: [],
+		requested: [ {month: 'Aug', rotation: 'Winter Park'} ],
+		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: '5', indx: 4, vacationMonths: [], extraVacationMonths: [],
-		scheduled: [],
-		rejects: [], possible: []//, schedule: []
+		name: '5', indx: 4, vacationMonths: ["May", "Dec"], extraVacationMonths: [],
+		requested: [],
+		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: '6', indx: 5, vacationMonths: [], extraVacationMonths: [],
-		scheduled: [],
-		rejects: [], possible: []//, schedule: []
+		name: '6', indx: 5, vacationMonths: ["May", "Aug", "Oct"], extraVacationMonths: [],
+		requested: [],
+		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: '7', indx: 6, vacationMonths: [], extraVacationMonths: [],
-		scheduled: [],
-		rejects: [], possible: []//, schedule: []
+		name: '7', indx: 6, vacationMonths: ["Jun"], extraVacationMonths: [],
+		requested: [],
+		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: '8', indx: 7, vacationMonths: [], extraVacationMonths: [],
-		scheduled: [],
-		rejects: [], possible: []//, schedule: []
+		name: '8', indx: 7, vacationMonths: ["Sep", "Nov"], extraVacationMonths: [],
+		requested: [],
+		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: '9', indx: 8, vacationMonths: [], extraVacationMonths: [],
-		scheduled: [],
-		rejects: [], possible: []//, schedule: []
+		name: '9', indx: 8, vacationMonths: ["Feb", "Apr", "Jul"], extraVacationMonths: [],
+		requested: [],
+		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: '10', indx: 9, vacationMonths: [], extraVacationMonths: [],
-		scheduled: [],
-		rejects: [], possible: []//, schedule: []
+		name: '10', indx: 9, vacationMonths: ["Apr", "Sep"], extraVacationMonths: [],
+		requested: [],
+		rejected: [], possible: []//, schedule: []
 	}
 ];
 
