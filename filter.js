@@ -22,8 +22,8 @@ var combosArr 	= JSON.parse(combosFile);
 var monthsDir 	= '../../../Dropbox/ResSchedule';
 
 // var residents 	= [constraints.residents[0], constraints.residents[1]],
-// var residents 	= constraints.residents,
-var residents 	= constraints.residents.splice(-9),
+var residents 	= constraints.residents,
+// var residents 	= constraints.residents.splice(-9),
 	rotations 	= constraints.rotations,
 	vacRot 		= constraints.vacationRotations,
 	tracker 	= constraints.requirementTracker,
@@ -84,9 +84,13 @@ var tooMany = function ( sched, tracker, resi ) {
 		if ( tempAdd > max ) {
 			exceedsLimit = true;
 			// DEBUGGING
-			// if ( resi === 9 ) {
-			// 	console.log( 'tooMany() failed. Trying:', trying, '; Month:', monthi, '; Rotation:', rotationIndx )
-			// }
+			if ( resi === 9 ) {
+				console.log( 'tooMany() failed. Month:', monthi, '; Rotation:', rotationIndx )
+			}
+
+			// Without break, 115 tries takes ~ 74882ms
+			// With break, 115 tries takes ~ 48572 (~1.5 times faster)
+			break;
 		}//console.log('exceeds limit? how? max:', max, ', temp:', tempAdd, ', rotIndx:', rotationIndx, ', month:', monthi )}
 	}
 
@@ -158,8 +162,8 @@ var tryOne = function( residents ) {
 	
 		var oldTime2 = Date.now();
 	var thisTracker = JSON.parse(JSON.stringify( tracker ));  // global object `tracker`
-		var newTime2 = Date.now();
-		console.log('copy tracker object:', elapsed(oldTime2, newTime2))
+		// var newTime2 = Date.now();
+		// console.log('copy tracker object:', elapsed(oldTime2, newTime2))
 
 	var reached = 0;
 
@@ -184,7 +188,7 @@ var tryOne = function( residents ) {
 
 				if (attemptNum > 100000) {
 					// console.log('OVER 9000; reached resident', reached);
-					console.log('tryOne() Time elapsed:', elapsed( oldTime1 ) );
+					// console.log('tryOne() Time elapsed:', elapsed( oldTime1 ) );
 					return null;
 				}
 
@@ -195,9 +199,9 @@ var tryOne = function( residents ) {
 			} else {
 				// -1 because schedIndx gets increased after this check
 				if ( !(schedIndx < (possible.length - 1)) ) {
-					// console.log('NONE FOUND FOR #10', elapsed(oldTime) );
+					console.log('NONE FOUND FOR #10', elapsed(oldTime) );
 					// console.log( thisTracker )
-					console.log('tryOne() Time elapsed:', elapsed( oldTime1 ) );
+					// console.log('tryOne() Time elapsed:', elapsed( oldTime1 ) );
 					return null;
 				}
 				schedIndx += 1;
@@ -212,8 +216,8 @@ var tryOne = function( residents ) {
 				// Increment the tracker so we can match against the next one
 					var oldTime6 = Date.now();
 				trackItUp( sched, thisTracker );
-					var newTime6 = Date.now();
-					console.log('trackItUp():', elapsed(oldTime6, newTime6));
+					// var newTime6 = Date.now();
+					// console.log('trackItUp():', elapsed(oldTime6, newTime6));
 
 				// Rank each result so we can add them at the end?
 				result.scheds.push( {
@@ -221,29 +225,28 @@ var tryOne = function( residents ) {
 					schedule: sched,
 					rank: schedIndx
 				} )  // add it and go to the next resident
-				// console.log('meets reqs:', resi, tempResult.scheds.length)
 
 				// Move on to the next resident
 				searching = false;
 
 			}  // end if meets reqs
-				var newTime5 = Date.now();
-				console.log('if meetsReqs:', elapsed(oldTime5, newTime5));
+				// var newTime5 = Date.now();
+				// console.log('if meetsReqs:', elapsed(oldTime5, newTime5));
 
 		}  // end while searching
-			var newTime4 = Date.now();
-			console.log('while searching:', elapsed(oldTime4, newTime4));
+			// var newTime4 = Date.now();
+			// console.log('while searching:', elapsed(oldTime4, newTime4));
 
 	}  // end for every resident
-		var newTime3 = Date.now();
-		console.log('loop through every resident:', elapsed(oldTime3, newTime3));
+		// var newTime3 = Date.now();
+		// console.log('loop through every resident:', elapsed(oldTime3, newTime3));
 
 	// Rank based on rank of each schedule (though this doesn't
 	// work right now because stuff isn't in order of rank)
 		var oldTime7 = Date.now();
 	result.rank = rankResult( result );
-		var newTime7 = Date.now();
-		console.log('result.rank:', elapsed(oldTime7, newTime7));
+		// var newTime7 = Date.now();
+		// console.log('result.rank:', elapsed(oldTime7, newTime7));
 
 	// CAN'T TEST MINS TILL WE TRY 10 ALL TOGETHER
 	// // If the final result doesn't meet our minimum requirements
@@ -253,7 +256,7 @@ var tryOne = function( residents ) {
 		// result = null;
 	// }
 
-	console.log('tryOne() Time elapsed:', elapsed( oldTime1 ) );
+	// console.log('tryOne() Time elapsed:', elapsed( oldTime1 ) );
 
 	return result;
 };
@@ -266,10 +269,8 @@ var oneResult = function( residents ) {
 	var result = null;
 
 	while ( result === null ) {
-		// console.log('result in oneRresult:', result);
 		result = tryOne( residents );
 	}
-	// console.log('result lengths:', result.scheds.length)
 
 	// console.log('oneResult() Time elapsed:', elapsed( oldTime ) );
 	return result;
@@ -319,8 +320,8 @@ var generateYears = function( residents, numWanted ) {
 
 	// Store results somewhere (id by what info was provided?)
 
-	// // DEBUGGING
-	// console.log('END. Time elapsed:', elapsed( oldTime ));
+	// DEBUGGING
+	console.log('END. Time elapsed:', elapsed( oldTime ));
 
 	// console.log('generateYears() Time elapsed:', elapsed( oldTime ) );
 
@@ -467,19 +468,24 @@ var vacationLimitation = function( vacations ) {
 
 	}
 
-	// Get file with info ordered by vacation months
-	// var file 	= fs.readFileSync( monthsDir + '/' + filename + '.json' ),
-	// 	indexes = JSON.parse( file );
-	var indexes = convertMonth( monthsDir + '/' + filename + '.csv' );
+	// If there were no vacations requested, just return the big list
+	if ( filename === '' ) {
+		result = combosArr;
+	} else {
+		// Get file with info ordered by vacation months
+		// var file 	= fs.readFileSync( monthsDir + '/' + filename + '.json' ),
+		// 	indexes = JSON.parse( file );
+		var indexes = convertMonth( monthsDir + '/' + filename + '.csv' );
 
-	// This array just contains the indexes of the actual combos in the main combo array
-	// Get the actual combos
-	for ( var i = 0; i < indexes.length; i++ ) {
-		// if ( i === 0 ) { console.log( 'filename:', filename, ', check first entry, should be one more that;', combosArr[ indexes[i] - 1 ] ) }  // Shows we get the right indexes - check against file
+		// This array just contains the indexes of the actual combos in the main combo array
+		// Get the actual combos
+		for ( var i = 0; i < indexes.length; i++ ) {
+			// if ( i === 0 ) { console.log( 'filename:', filename, ', check first entry, should be one more that;', combosArr[ indexes[i] - 1 ] ) }  // Shows we get the right indexes - check against file
 
-		// brobot started schedule combo indexes at 1
-		result.push( combosArr[ indexes[i] - 1 ] );
-	}
+			// brobot started schedule combo indexes at 1
+			result.push( combosArr[ indexes[i] - 1 ] );
+		}
+	}  // end if any filename
 
 	return result;
 };  // End vacationLimitation()
@@ -563,8 +569,6 @@ var getOptions = function( residents, numWanted ) {
 		if (resident.possible.length <= 0 ) {
 			console.error('Hmm, no schedule for this resident?', resident.possible );
 		}
-		// // DEBUGGING
-		// console.log( '----------length:', resident.possible.length, ', first:', resident.possible[1] );
 	}  // end for every resident, assign possible schedules
 
 
@@ -624,4 +628,4 @@ var rotObj = {
 var result = getOptions(residents, 1)
 // console.log('tryOne() ran', tryingOne, 'times')
 // console.log('tooMany() ran', countTooMany, 'times');
-// console.log( JSON.stringify(result) );
+console.log( JSON.stringify(result) );

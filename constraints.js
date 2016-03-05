@@ -7,53 +7,113 @@ var residents = [
 	// `rejects` is monts and rotations that the resident definitely doesn't want to do
 	// each working schedule should be kept with final results
 	{
-		name: 'H.', indx: 1, vacationMonths: ["May","Jun"], extraVacationMonths: [],
-		requested: [ {month: 'Jul', rotation: 'Elective'} ],
+		name: 'H.', indx: 1, vacationMonths: [/*"May","Jun","Sep"*/], extraVacationMonths: [],
+		requested: [ //{month: 'Jul', rotation: 'Elective'},
+			// fms
+			// {month: 'Jan', rotation: 'FMS'},
+			// {month: 'Mar', rotation: 'FMS'},
+			// {month: 'May', rotation: 'FMS'},
+			// {month: 'Jul', rotation: 'FMS'}
+		],
 		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: '06', indx: 5, vacationMonths: ["May", "Aug"], extraVacationMonths: [],
-		requested: [],
+		name: '06', indx: 5, vacationMonths: [/*"May", "Aug", "Oct"*/], extraVacationMonths: [],
+		requested: [
+			// fms
+			// {month: 'Jan', rotation: 'FMS'},
+			// {month: 'Mar', rotation: 'FMS'},
+			// {month: 'May', rotation: 'FMS'},
+			// {month: 'Jul', rotation: 'FMS'}
+		],
 		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: '09', indx: 8, vacationMonths: ["Feb", "Apr"], extraVacationMonths: [],
-		requested: [],
+		name: '09', indx: 8, vacationMonths: [/*"Feb", "Apr", "Jul"*/], extraVacationMonths: [],
+		requested: [
+			// fms
+			// {month: 'Jan', rotation: 'FMS'},
+			// {month: 'Mar', rotation: 'FMS'},
+			// {month: 'May', rotation: 'FMS'},
+			// {month: 'Jul', rotation: 'FMS'}
+		],
 		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: 'A.', indx: 0, vacationMonths: [ "Jan", "Mar" ], extraVacationMonths: [],
-		requested: [ {month: 'Jul', rotation: 'Elective'} ],
+		name: 'A.', indx: 0, vacationMonths: [ /*"Jan", "Mar" */], extraVacationMonths: [],
+		requested: [ //{month: 'Jul', rotation: 'Elective'},
+			// fms
+			// {month: 'Feb', rotation: 'FMS'},
+			// {month: 'Apr', rotation: 'FMS'},
+			// {month: 'Jun', rotation: 'FMS'},
+			// {month: 'Aug', rotation: 'FMS'} 
+		],
 		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: 'K.', indx: 2, vacationMonths: ["Jul", "Dec"], extraVacationMonths: [],
-		requested: [ {month: 'Aug', rotation: 'Winter Park'} ],
+		name: 'K.', indx: 2, vacationMonths: [/*"Jul", "Dec"*/], extraVacationMonths: [],
+		requested: [ //{month: 'Aug', rotation: 'Winter Park'},
+			// fms
+			// {month: 'Feb', rotation: 'FMS'},
+			// {month: 'Apr', rotation: 'FMS'},
+			// {month: 'Jun', rotation: 'FMS'},
+			// {month: 'Aug', rotation: 'FMS'},
+		],
 		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: 'B.', indx: 3, vacationMonths: ["Feb", "Dec"], extraVacationMonths: [],
-		requested: [ {month: 'Aug', rotation: 'Winter Park'} ],
+		name: 'B.', indx: 3, vacationMonths: [/*"Feb", "Dec"*/], extraVacationMonths: [],
+		requested: [ //{month: 'Aug', rotation: 'Winter Park'},
+			// fms
+			// {month: 'Feb', rotation: 'FMS'},
+			// {month: 'Apr', rotation: 'FMS'},
+			// {month: 'Jun', rotation: 'FMS'},
+			// {month: 'Aug', rotation: 'FMS'} 
+		],
 		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: '05', indx: 4, vacationMonths: ["May", "Dec"], extraVacationMonths: [],
-		requested: [],
+		name: '05', indx: 4, vacationMonths: [/*"May", "Dec"*/], extraVacationMonths: [],
+		requested: [
+			// fms
+			// {month: '', rotation: 'FMS'},
+			// {month: '', rotation: 'FMS'},
+			// {month: '', rotation: 'FMS'},
+			// {month: '', rotation: 'FMS'}
+		],
 		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: '08', indx: 7, vacationMonths: ["Sep", "Nov"], extraVacationMonths: [],
-		requested: [],
+		name: '08', indx: 7, vacationMonths: [/*"Sep", "Nov"*/], extraVacationMonths: [],
+		requested: [
+			// fms
+			// {month: '', rotation: 'FMS'},
+			// {month: '', rotation: 'FMS'},
+			// {month: '', rotation: 'FMS'},
+			// {month: '', rotation: 'FMS'}
+		],
 		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: '10', indx: 9, vacationMonths: ["Apr", "Sep"], extraVacationMonths: [],
-		requested: [],
+		name: '10', indx: 9, vacationMonths: [/*"Apr", "Sep"*/], extraVacationMonths: [],
+		requested: [
+			// fms
+			// {month: '', rotation: 'FMS'},
+			// {month: '', rotation: 'FMS'},
+			// {month: '', rotation: 'FMS'},
+			// {month: '', rotation: 'FMS'}
+		],
 		rejected: [], possible: []//, schedule: []
 	},
 	{
-		name: '07', indx: 6, vacationMonths: ["Jun"], extraVacationMonths: [],
-		requested: [],
+		name: '07', indx: 6, vacationMonths: [/*"Jun"*/], extraVacationMonths: [],
+		requested: [
+			// fms
+			// {month: '', rotation: 'FMS'},
+			// {month: '', rotation: 'FMS'},
+			// {month: '', rotation: 'FMS'},
+			// {month: '', rotation: 'FMS'}
+		],
 		rejected: [], possible: []//, schedule: []
 	}
 ];
@@ -89,10 +149,10 @@ var rotations = [
 	},
 	{  // 3
 		name: 'Elective',
-		perMonth: [ {min: 0, max: numR}, {min: 0, max: numR}, {min: 0, max: numR},
-			{min: 0, max: numR}, {min: 0, max: numR}, {min: 0, max: numR},
-			{min: 0, max: numR}, {min: 0, max: numR}, {min: 0, max: numR},
-			{min: 0, max: numR}, {min: 0, max: numR}, {min: 0, max: numR}
+		perMonth: [ {min: numR, max: numR}, {min: numR, max: numR}, {min: numR, max: numR},
+			{min: numR, max: numR}, {min: numR, max: numR}, {min: numR, max: numR},
+			{min: numR, max: numR}, {min: numR, max: numR}, {min: numR, max: numR},
+			{min: numR, max: numR}, {min: numR, max: numR}, {min: numR, max: numR}
 		],
 		perResident: 2,
 		easy: true,
