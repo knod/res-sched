@@ -4,7 +4,8 @@
   "description": "An np-complete problem with constraints",
   "main": "server.js",
   "dependencies": {
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "split": "^1.0.0"
   },
   "devDependencies": {},
   "scripts": {
