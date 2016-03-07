@@ -6,97 +6,210 @@
 
 	<!-- <script src="generator.js"></script> -->
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 </head>
 <body>
 	<form action="">
-		
-		<section>
+		<section class='residents' style='display:none;'>
 			<h1>Residents</h1>
-
 			<div class='sub-section resident-names'>
-
-				<span class='container input resident-name'>
-					<div class='column'>
-						<label for="first-name">First Name</label>
-						<!-- <br> -->
-						<input type="text" name='first-name'>
+				<div class='one-resident'>
+					<div class='resident-part name'>
+						<span class='container input resident-name'>
+							<div class='column'>
+								<label for="name">Name</label>
+								<input type="text" name='name'>
+							</div>
+							<!-- Should be whatever they want it to be -->
+						</span>
+						<span class='controls'>
+							<span class='container add add-resident'>+</span>
+							<span class='container delete delete-resident'>-</span>
+						</span>
 					</div>
-					<div class='column'>
-						<label for="last-name">Last Name</label>
-						<!-- <br> -->
-						<input type="text" name='last-name'>
+					<!-- End .name -->
+					<div class='resident-part dh-uh'>
+						<div class="column">
+							<label for="dh-uh">DH</label>
+							<input type="radio" name='dh-uh'>
+						</div>
+						<div class="column">
+							<label for="dh-uh">UH</label>
+							<input type="radio" name='dh-uh'>
+						</div>
 					</div>
-					<div class='column'>
-						<label for="middle-initial">Middle Initial (if any)</label>
-						<!-- <br> -->
-						<input type="text" name='middle-initial'>
-					</div>
-					<!-- Remember to filter out any non-aphabetic characters -->
-				</span>
-				<span class='controls'>
-					<span class='container add add-resident'>+</span>
-					<span class='container delete delete-resident'>-</span>
-				</span>
-
-				<div class='sub-section vacations'>
-					<h2>Vacations</h2>
-					
-					<span class='container input month-name'>
-						<span class='month'>
-							<input type="checkbox" data='Jan'>
-							<label for="vacation-months">January</label>
-						</span>
-						<span class='month'>
-							<input type="checkbox" data='Feb'>
-							<label for="vacation-months">February</label>
-						</span>
-						<span class='month'>
-							<input type="checkbox" data='Mar'>
-							<label for="vacation-months">March</label>
-						</span>
-						<span class='month'>
-							<input type="checkbox" data='Apr'>
-							<label for="vacation-months">April</label>
-						</span>
-						<span class='month'>
-							<input type="checkbox" data='May'>
-							<label for="vacation-months">May</label>
-						</span>
-						<span class='month'>
-							<input type="checkbox" data='Jun'>
-							<label for="vacation-months">June</label>
-						</span>
-						<span class='month'>
-							<input type="checkbox" data='Jul'>
-							<label for="vacation-months">July</label>
-						</span>
-						<span class='month'>
-							<input type="checkbox" data='Aug'>
-							<label for="vacation-months">August</label>
-						</span>
-						<span class='month'>
-							<input type="checkbox" data='Sep'>
-							<label for="vacation-months">September</label>
-						</span>
-						<span class='month'>
-							<input type="checkbox" data='Oct'>
-							<label for="vacation-months">October</label>
-						</span>
-						<span class='month'>
-							<input type="checkbox" data='Nov'>
-							<label for="vacation-months">November</label>
-						</span>
-						<span class='month'>
-							<input type="checkbox" data='Dec'>
-							<label for="vacation-months">December</label>
-						</span>
-
+					<!-- End .dh-uh -->
 				</div>
-				<!-- End vacations -->
-
+				<!-- End .one-resident -->
 			</div>
 			<!-- End resident names -->
+		</section>
+
+
+		<section class='schedule-container'>
+			<h1>Schedule</h1>
+			
+			<table class='schedule'>
+				<thead>
+				    <tr>
+					    <th scope="col" class='month' data-month='none'></th>
+					    <th scope="col" class='month' data-month='January'>January</th>
+					    <th scope="col" class='month' data-month='February'>February</th>
+					    <th scope="col" class='month' data-month='March'>March</th>
+					    <th scope="col" class='month' data-month='April'>April</th>
+					    <th scope="col" class='month' data-month='May'>May</th>
+					    <th scope="col" class='month' data-month='June'>June</th>
+					    <th scope="col" class='month' data-month='July'>July</th>
+					    <th scope="col" class='month' data-month='August'>August</th>
+					    <th scope="col" class='month' data-month='September'>September</th>
+					    <th scope="col" class='month' data-month='October'>October</th>
+					    <th scope="col" class='month' data-month='November'>November</th>
+					    <th scope="col" class='month' data-month='December'>December</th>
+				    </tr>
+				</thead>
+				<tbody>
+				    <tr class='resident-row' id='id_will_equal_name'>
+					   
+					    <th scope="row">
+					    	<div class="fa fa-unlock right"></div>
+							<div class="picture">
+								Pic
+							</div>
+							<div class='res-name'>
+								<!-- <label for='res-name'>Name:</label> -->
+								<input type='text' name='res-name' placeholder='Name'></input>
+							</div>
+							<div class='dh-uh input'>
+								<input type="radio" name='dh-uh' data='dh'>
+								<label for="dh-uh">DH</label>
+								<input type="radio" name='dh-uh' data='uh'>
+								<label for="dh-uh">UH</label>
+							</div>
+					    </th>
+
+					    <td class='input'>
+					    	<div class="top">
+					    		<div class="vacation left">
+					    			<input type="checkbox" name='vacation'>
+					    			<label for="vacation">vacation</label>
+					    		</div>
+					    		<div class="fa fa-unlock lock right"></div>
+					    	</div>
+					    	<div class="middle rot-name">
+					    		<div class='left button-green arrow-parent arrow-right-parent'>
+						    		<div class='arrow-right arrow'></div>
+					    		</div>
+					    		<div class='request'>
+									<!-- Maybe should be h1, but that's a pain to re-style -->
+									<div class='rot-output'>Derm</div>
+					    			<div class='dropdown rot-dropdown'>
+					    				<ul class='rot-choices'>
+					    					<li class="choice" data-rot='FMS'>
+					    						<input type="radio" name='rot-request' data-rot='FMS'>
+					    						<label for="rot-request">FMS</label>
+					    					</li>
+					    					<li class="choice" data-rot='Rural'>
+					    						<input type="radio" name='rot-request' data-rot='Rural'>
+					    						<label for="rot-request">Rural</label>
+					    					</li>
+					    					<li class="choice" data-rot='Elec'>
+					    						<input type="radio" name='rot-request' data-rot='Elec'>
+					    						<label for="rot-request">Elec</label>
+					    					</li>
+					    					<li class="choice" data-rot='Cardio'>
+					    						<input type="radio" name='rot-request' data-rot='Cardio'>
+					    						<label for="rot-request">Cardio</label>
+					    					</li>
+					    					<li class="choice" data-rot='W-P'>
+					    						<input type="radio" name='rot-request' data-rot='W-P'>
+					    						<label for="rot-request">W-P</label>
+					    					</li>
+					    					<li class="choice" data-rot='Ger'>
+					    						<input type="radio" name='rot-request' data-rot='Ger'>
+					    						<label for="rot-request">Ger</label>
+					    					</li>
+					    					<li class="choice" data-rot='pcmh'>
+					    						<input type="radio" name='rot-request' data-rot='pcmh'>
+					    						<label for="rot-request">pcmh</label>
+					    					</li>
+					    					<li class="choice" data-rot='Derm'>
+					    						<input type="radio" name='rot-request' data-rot='Derm'>
+					    						<label for="rot-request">Derm</label>
+					    					</li>
+					    				</ul>
+					    			</div>
+					    		</div>
+					    	</div>
+					    	<!-- End .request -->
+					    	<div class='bottom reject'>
+					    		<div class="input button-red">Exclude...</div>
+					    		<div class='reject-choices'>
+
+					    			<ul class="column">
+					    				<li class="reject-choice">
+					    					<input type="checkbox" name='FMS' data-rot='FMS'>
+					    					<label for="FMS">FMS</label>
+					    				</li>
+					    				<li class="reject-choice">
+					    					<input type="checkbox" name='Rural' data-rot='Rural'>
+					    					<label for="Rural">Rural</label>
+					    				</li>
+					    				<li class="reject-choice">
+					    					<input type="checkbox" name='Elec' data-rot='Elec'>
+					    					<label for="Elec">Elec</label>
+					    				</li>
+					    				<li class="reject-choice">
+					    					<input type="checkbox" name='Cardio' data-rot='Cardio'>
+					    					<label for="Cardio">Card</label>
+					    				</li>
+					    			</ul>
+					    			<!-- End .column -->
+					    			<ul class="column">
+					    				<li class="reject-choice">
+					    					<input type="checkbox" name='W-P' data-rot='W-P'>
+					    					<label for="W-P">W-P</label>
+					    				</li>
+					    				<li class="reject-choice">
+					    					<input type="checkbox" name='Ger' data-rot='Ger'>
+					    					<label for="Ger">Ger</label>
+					    				</li>
+					    				<li class="reject-choice">
+					    					<input type="checkbox" name='pcmh' data-rot='pcmh'>
+					    					<label for="pcmh">pcmh</label>
+					    				</li>
+					    				<li class="reject-choice">
+					    					<input type="checkbox" name='Derm' data-rot='Derm'>
+					    					<label for="Derm">Der</label>
+					    				</li>
+					    			</ul>
+					    			<!-- End .column -->
+					    		</div>
+					    		<!-- End .exclusions -->
+					    	</div>
+					    	<!-- End .exclude-container -->
+					    </td>
+
+					    <td class='input'></td>
+					    <td class='input'></td>
+					    <td class='input'></td>
+				    </tr>
+
+
+				    <tr>
+					    <th scope="row">
+					    	<div class="fa fa-unlock right"></div>
+							<div class="picture">
+								Pic
+							</div>
+							<div class="res-name"> Name 2</div>
+					    </th>
+					    <td></td>
+					    <td></td>
+				    </tr>
+				</tbody>
+			</table>
+
 
 		</section>
 

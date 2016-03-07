@@ -5,6 +5,7 @@
 * 	being most difficult?
 * - ??: Somehow make sure residents can't reject slots that
 * 	they've already scheduled/say they want
+* - Polish - if (resident['dh-uh'] === 'dh') { turn Rural into Elective }
 * 
 */
 

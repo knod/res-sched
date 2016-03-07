@@ -8,113 +8,53 @@ var residents = [
 	// each working schedule should be kept with final results
 	{
 		name: 'H.', indx: 1, vacationMonths: [/*"May","Jun","Sep"*/], extraVacationMonths: [],
-		requested: [ //{month: 'Jul', rotation: 'Elective'},
-			// fms
-			// {month: 'Jan', rotation: 'FMS'},
-			// {month: 'Mar', rotation: 'FMS'},
-			// {month: 'May', rotation: 'FMS'},
-			// {month: 'Jul', rotation: 'FMS'}
-		],
-		rejected: [], possible: []//, schedule: []
+		requested: [ {month: 'Jul', rotation: 'Elec'} ],
+		rejected: [], possible: [], 'dh-uh': 'dh'//, schedule: []
 	},
 	{
 		name: '06', indx: 5, vacationMonths: [/*"May", "Aug", "Oct"*/], extraVacationMonths: [],
-		requested: [
-			// fms
-			// {month: 'Jan', rotation: 'FMS'},
-			// {month: 'Mar', rotation: 'FMS'},
-			// {month: 'May', rotation: 'FMS'},
-			// {month: 'Jul', rotation: 'FMS'}
-		],
-		rejected: [], possible: []//, schedule: []
+		requested: [],
+		rejected: [], possible: [], 'dh-uh': 'dh'//, schedule: []
 	},
 	{
 		name: '09', indx: 8, vacationMonths: [/*"Feb", "Apr", "Jul"*/], extraVacationMonths: [],
-		requested: [
-			// fms
-			// {month: 'Jan', rotation: 'FMS'},
-			// {month: 'Mar', rotation: 'FMS'},
-			// {month: 'May', rotation: 'FMS'},
-			// {month: 'Jul', rotation: 'FMS'}
-		],
-		rejected: [], possible: []//, schedule: []
+		requested: [],
+		rejected: [], possible: [], 'dh-uh': 'dh'//, schedule: []
 	},
 	{
 		name: 'A.', indx: 0, vacationMonths: [ /*"Jan", "Mar" */], extraVacationMonths: [],
-		requested: [ //{month: 'Jul', rotation: 'Elective'},
-			// fms
-			// {month: 'Feb', rotation: 'FMS'},
-			// {month: 'Apr', rotation: 'FMS'},
-			// {month: 'Jun', rotation: 'FMS'},
-			// {month: 'Aug', rotation: 'FMS'} 
-		],
-		rejected: [], possible: []//, schedule: []
+		requested: [ {month: 'Jul', rotation: 'Elec'} ],
+		rejected: [], possible: [], 'dh-uh': 'dh'//, schedule: []
 	},
 	{
 		name: 'K.', indx: 2, vacationMonths: [/*"Jul", "Dec"*/], extraVacationMonths: [],
-		requested: [ //{month: 'Aug', rotation: 'Winter Park'},
-			// fms
-			// {month: 'Feb', rotation: 'FMS'},
-			// {month: 'Apr', rotation: 'FMS'},
-			// {month: 'Jun', rotation: 'FMS'},
-			// {month: 'Aug', rotation: 'FMS'},
-		],
-		rejected: [], possible: []//, schedule: []
+		requested: [ {month: 'Aug', rotation: 'W-P'} ],
+		rejected: [], possible: [], 'dh-uh': 'dh'//, schedule: []
 	},
 	{
 		name: 'B.', indx: 3, vacationMonths: [/*"Feb", "Dec"*/], extraVacationMonths: [],
-		requested: [ //{month: 'Aug', rotation: 'Winter Park'},
-			// fms
-			// {month: 'Feb', rotation: 'FMS'},
-			// {month: 'Apr', rotation: 'FMS'},
-			// {month: 'Jun', rotation: 'FMS'},
-			// {month: 'Aug', rotation: 'FMS'} 
-		],
-		rejected: [], possible: []//, schedule: []
+		requested: [ {month: 'Aug', rotation: 'W-P'} ],
+		rejected: [], possible: [], 'dh-uh': 'dh'//, schedule: []
 	},
 	{
 		name: '05', indx: 4, vacationMonths: [/*"May", "Dec"*/], extraVacationMonths: [],
-		requested: [
-			// fms
-			// {month: '', rotation: 'FMS'},
-			// {month: '', rotation: 'FMS'},
-			// {month: '', rotation: 'FMS'},
-			// {month: '', rotation: 'FMS'}
-		],
-		rejected: [], possible: []//, schedule: []
+		requested: [],
+		rejected: [], possible: [], 'dh-uh': 'dh'//, schedule: []
 	},
 	{
 		name: '08', indx: 7, vacationMonths: [/*"Sep", "Nov"*/], extraVacationMonths: [],
-		requested: [
-			// fms
-			// {month: '', rotation: 'FMS'},
-			// {month: '', rotation: 'FMS'},
-			// {month: '', rotation: 'FMS'},
-			// {month: '', rotation: 'FMS'}
-		],
-		rejected: [], possible: []//, schedule: []
+		requested: [],
+		rejected: [], possible: [], 'dh-uh': 'dh'//, schedule: []
 	},
 	{
 		name: '10', indx: 9, vacationMonths: [/*"Apr", "Sep"*/], extraVacationMonths: [],
-		requested: [
-			// fms
-			// {month: '', rotation: 'FMS'},
-			// {month: '', rotation: 'FMS'},
-			// {month: '', rotation: 'FMS'},
-			// {month: '', rotation: 'FMS'}
-		],
-		rejected: [], possible: []//, schedule: []
+		requested: [],
+		rejected: [], possible: [], 'dh-uh': 'dh'//, schedule: []
 	},
 	{
 		name: '07', indx: 6, vacationMonths: [/*"Jun"*/], extraVacationMonths: [],
-		requested: [
-			// fms
-			// {month: '', rotation: 'FMS'},
-			// {month: '', rotation: 'FMS'},
-			// {month: '', rotation: 'FMS'},
-			// {month: '', rotation: 'FMS'}
-		],
-		rejected: [], possible: []//, schedule: []
+		requested: [],
+		rejected: [], possible: [], 'dh-uh': 'dh'//, schedule: []
 	}
 ];
 
@@ -137,7 +77,7 @@ var rotations = [
 		vacation: false
 	},
 	{  // 2
-		name: 'Rural',
+		name: 'Rural',  // Maybe 0 to 1
 		perMonth: [ {min: 0, max: 2}, {min: 0, max: 2}, {min: 0, max: 2},
 			{min: 0, max: 2}, {min: 0, max: 2}, {min: 0, max: 2},
 			{min: 0, max: 2}, {min: 0, max: 2}, {min: 0, max: 2},
@@ -148,7 +88,7 @@ var rotations = [
 		vacation: false
 	},
 	{  // 3
-		name: 'Elective',
+		name: 'Elec',
 		perMonth: [ {min: numR, max: numR}, {min: numR, max: numR}, {min: numR, max: numR},
 			{min: numR, max: numR}, {min: numR, max: numR}, {min: numR, max: numR},
 			{min: numR, max: numR}, {min: numR, max: numR}, {min: numR, max: numR},
@@ -159,7 +99,7 @@ var rotations = [
 		vacation: true
 	},
 	{  // 4
-		name: 'Cardiology',
+		name: 'Cardio',
 		perMonth: [ {min: 0, max: 1}, {min: 0, max: 1}, {min: 0, max: 1},
 			{min: 0, max: 1}, {min: 0, max: 1}, {min: 0, max: 1},
 			{min: 0, max: 1}, {min: 0, max: 1}, {min: 0, max: 1},
@@ -170,7 +110,7 @@ var rotations = [
 		vacation: false
 	},
 	{  // 5
-		name: 'Winter Park',
+		name: 'W-P',
 		perMonth: [ {min: 1, max: 2}, {min: 1, max: 2}, {min: 1, max: 2},
 			{min: 1, max: 2}, {min: 0, max: 0}, {min: 0, max: 0},
 			{min: 0, max: 0}, {min: 1, max: 2}, {min: 1, max: 2},
@@ -181,7 +121,7 @@ var rotations = [
 		vacation: false
 	},
 	{  // 6
-		name: 'Geriatrics',
+		name: 'Ger',
 		perMonth: [ {min: 0, max: 1}, {min: 0, max: 1}, {min: 0, max: 1},
 			{min: 0, max: 1}, {min: 0, max: 1}, {min: 0, max: 1},
 			{min: 0, max: 1}, {min: 0, max: 1}, {min: 0, max: 1},
@@ -192,7 +132,7 @@ var rotations = [
 		vacation: true
 	},
 	{  // 7
-		name: 'PCMH',
+		name: 'pcmh',
 		perMonth: [ {min: 0, max: 1}, {min: 0, max: 1}, {min: 0, max: 1},
 			{min: 0, max: 1}, {min: 0, max: 1}, {min: 0, max: 1},
 			{min: 0, max: 1}, {min: 0, max: 1}, {min: 0, max: 1},
@@ -203,7 +143,7 @@ var rotations = [
 		vacation: true
 	},
 	{  // 8
-		name: 'Dermatology',
+		name: 'Derm',
 		perMonth: [ {min: 0, max: 1}, {min: 0, max: 1}, {min: 0, max: 1},
 			{min: 0, max: 1}, {min: 0, max: 1}, {min: 0, max: 1},
 			{min: 0, max: 1}, {min: 0, max: 1}, {min: 0, max: 1},
@@ -216,7 +156,13 @@ var rotations = [
 ];
 
 
+// Should be a bit different for DH vs. UH?
+// Somehow don't allow vacations for Rural
 var vacationRotations = [3, 6, 7, 8];
+
+// Also account for no dh in Cardio with dh in Derm
+
+var rural = { dh: false, uh: true };
 
 
 var requirementTracker = [
@@ -244,8 +190,8 @@ var maxes = [
 ];
 
 var rotationMap = {
-	'FMS': 1, 'Rural': 2, 'Elective': 3, 'Cardiology': 4,
-	'Winter Park': 5, 'Geriatrics': 6, 'PCMH': 7, 'Dermatology': 8
+	'FMS': 1, 'Rural': 2, 'Elec': 3, 'Cardio': 4,
+	'W-P': 5, 'Ger': 6, 'pcmh': 7, 'Derm': 8
 };
 
 var monthMap = {
